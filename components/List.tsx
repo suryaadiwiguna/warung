@@ -5,25 +5,30 @@ import Link from "next/link";
 import { ReactElement } from "react";
 
 export default function List({ data, colName }: { data: any[]; colName: string[] }): ReactElement {
+
+    function getRandomNumber() {
+        return Math.round(Math.random() * (99999 - 10001))
+    }
+
     return (
         <>
             <TableContainer>
-                <Table maxW={'sm'}>
-                    <Thead>
-                        <Tr>
+                <Table >
+                    <Thead >
+                        <Tr >
                             {colName.map((key) => {
                                 return (
-                                    <Th>{key}</Th>
+                                    <Th key={getRandomNumber()}>{key}</Th>
                                 )
                             })}
                         </Tr>
                     </Thead>
-                    <Tbody>
+                    <Tbody >
                         {data.map((data) => {
                             return (
-                                <Tr>
+                                <Tr key={getRandomNumber()}>
                                     {colName.map((key) => {
-                                        return <Td>{
+                                        return <Td key={getRandomNumber()}>{
                                             key == colName[0] ? <Text color={'blue'}> <Link href={`#/${data.id}`}> {data[key]} </Link> </Text> : data[key]
                                         }
                                         </Td>
