@@ -1,24 +1,30 @@
-import { Box, Container, Heading } from "@chakra-ui/react"
+'use client'
+import { Box, Container, Heading, Text } from "@chakra-ui/react"
 import List from "../../components/List"
 import Search from "../../components/Search"
+import { useEffect, useState } from "react"
 
 export default function Home() {
 
-  const data = [
-    {
-      id: 1,
-      name: "Magnum",
-      price: 25000,
-      description: "Price per-piece",
-      createdBy: "Ucup"
-    }, {
-      id: 2,
-      name: "Sampoerna Mild 12",
-      price: 32000,
-      description: "Price per-box",
-      createdBy: "Ucup"
-    }
-  ]
+  const [products, setProducts] = useState([])
+  const [isLoading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('https://idrus-haerulumam.outsystemscloud.com/JagaWaroeng_API/rest/JagaWaroeng_API/Get_All_Products')
+      .then((res) => {
+        if (!res.ok) throw new Error('Something is wrong')
+        return res.json()
+      })
+      .then((data) => {
+        console.log(data)
+        setProducts(data.data)
+        setLoading(false)
+      })
+      .catch((e) => {
+        console.log(e)
+        setLoading(false)
+      })
+  }, [])
 
   return (
     <main>
@@ -31,7 +37,10 @@ export default function Home() {
         <Search />
       </Container>
       <Container maxW={'4xl'}>
-        <List data={data} colName={["name", "price", "description"]}></List>
+        {isLoading && products.length == 0 ? <Text textAlign={'center'}>Loading...</Text> :
+          <List data={products} colName={["Product_Name", "Price", "Product_Description"]}></List>
+        }
+        {products.length == 0 && !isLoading ? <Text textAlign={'center'}>No data</Text> : null}
       </Container>
     </main>
   )
