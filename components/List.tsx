@@ -4,7 +4,7 @@ import { Table, Tbody, Th, Thead, Tr, Td, Text, TableContainer } from "@chakra-u
 import Link from "next/link";
 import { ReactElement } from "react";
 
-export default function List({ data, colName }: { data: any[]; colName: string[] }): ReactElement {
+export default function List({ data, field, tableHeader }: { data: any[]; field: string[]; tableHeader: string[] }): ReactElement {
 
     function getRandomNumber() {
         return Math.round(Math.random() * (99999 - 10001))
@@ -16,7 +16,7 @@ export default function List({ data, colName }: { data: any[]; colName: string[]
                 <Table >
                     <Thead >
                         <Tr >
-                            {colName.map((key) => {
+                            {tableHeader.map((key) => {
                                 return (
                                     <Th key={getRandomNumber()}>{key}</Th>
                                 )
@@ -27,9 +27,9 @@ export default function List({ data, colName }: { data: any[]; colName: string[]
                         {data.map((data) => {
                             return (
                                 <Tr key={getRandomNumber()}>
-                                    {colName.map((key) => {
+                                    {field.map((key) => {
                                         return <Td key={getRandomNumber()}>{
-                                            key == colName[0] ? <Text color={'blue'}> <Link href={`#/${data.id}`}> {data[key]} </Link> </Text> : data[key]
+                                            key == field[0] ? <Text color={'blue'}> <Link href={`#/${data.id}`}> {data[key]} </Link> </Text> : data[key]
                                         }
                                         </Td>
                                     })}

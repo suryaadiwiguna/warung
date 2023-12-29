@@ -38,7 +38,7 @@ export default function Home() {
       </Container>
       <Container maxW={'4xl'}>
         {isLoading && products.length == 0 ? <Text textAlign={'center'}>Loading...</Text> :
-          <List data={products} colName={["Product_Name", "Price", "Product_Description"]}></List>
+          <List data={products} field={["Product_Name", "Price", "Product_Description"]} tableHeader={["Product Name", "Price", "Description"]}></List>
         }
         {products.length == 0 && !isLoading ? <Text textAlign={'center'}>No data</Text> : null}
       </Container>
