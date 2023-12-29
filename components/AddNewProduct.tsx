@@ -41,7 +41,7 @@ export default function AddNewProduct() {
 
                     <ModalFooter>
                         <Button colorScheme='orange' variant={'outline'} mr={3} onClick={onClose}> Close </Button>
-                        <Button colorScheme='orange' variant={'solid'} onClick={onClose} > Submit </Button>
+                        <Button colorScheme='orange' variant={'solid'} onClick={handleSubmit} > Submit </Button>
                     </ModalFooter>
 
                 </ModalContent>
@@ -79,6 +79,6 @@ function NewProductForm() {
     )
 }
 
-function submit() {
+function handleSubmit() {
 
 }
