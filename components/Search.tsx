@@ -1,5 +1,6 @@
 'use client'
 
+import { SearchIcon } from "@chakra-ui/icons";
 import { Button, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 
 export default function Search() {
@@ -7,7 +8,7 @@ export default function Search() {
         <>
             <InputGroup>
                 <InputLeftAddon>
-                    Search:
+                    <SearchIcon />
                 </InputLeftAddon>
                 <Input type="search" placeholder="Product name" />
                 <Button colorScheme="orange" ml={'1em'} px={'2em'}>Search</Button>
