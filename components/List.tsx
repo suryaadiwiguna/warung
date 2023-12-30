@@ -3,6 +3,7 @@
 import { Table, Tbody, Th, Thead, Tr, Td, Text, TableContainer } from "@chakra-ui/react";
 import Link from "next/link";
 import { ReactElement } from "react";
+import ProductDetails from "./ProductDetails";
 
 export default function List({ data, field, tableHeader }: { data: any[]; field: string[]; tableHeader: string[] }): ReactElement {
 
@@ -29,7 +30,8 @@ export default function List({ data, field, tableHeader }: { data: any[]; field:
                                 <Tr key={getRandomNumber()}>
                                     {field.map((key) => {
                                         return <Td key={getRandomNumber()}>{
-                                            key == field[0] ? <Text color={'orange.500'}> <Link href={`#/${data.id}`}> {data[key]} </Link> </Text> : data[key]
+                                            key == field[0] ? <ProductDetails productName={data[key]} productId={data.Id} /> : data[key]
+                                            // < Text color={'orange.500'}> <Link href={`#/${data.id}`}> {data[key]} </Link> </Text>
                                         }
                                         </Td>
                                     })}

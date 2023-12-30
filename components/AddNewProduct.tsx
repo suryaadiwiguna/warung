@@ -73,7 +73,7 @@ export default function AddNewProduct() {
 
             <Modal isOpen={isOpen} onClose={onClose} size={'4xl'}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent mx={'1em'}>
                     <ModalHeader>Add New Product</ModalHeader>
                     <ModalCloseButton />
                     <form onSubmit={formik.handleSubmit}>
