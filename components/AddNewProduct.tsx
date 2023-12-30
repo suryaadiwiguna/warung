@@ -17,7 +17,9 @@ import {
     Input,
     Box,
     Flex,
-    Textarea
+    Textarea,
+    Select,
+    Stack
 } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 
@@ -36,7 +38,7 @@ export default function AddNewProduct() {
                     <ModalCloseButton />
 
                     <ModalBody>
-                        <Flex direction={'column'} gap={4}>
+                        <Stack spacing={3}>
                             <FormControl isRequired>
                                 <FormLabel>Product Name</FormLabel>
                                 <Input type='text' placeholder='New product name' />
@@ -47,16 +49,24 @@ export default function AddNewProduct() {
                                 <Input type='number' placeholder='The price (number only)' />
                                 <FormErrorMessage>Price is required.</FormErrorMessage>
                             </FormControl>
-                            <FormControl >
-                                <FormLabel>Description</FormLabel>
-                                <Textarea placeholder='Product description' />
-                            </FormControl>
                             <FormControl isRequired>
                                 <FormLabel>Stock</FormLabel>
                                 <Input type='number' placeholder='Stock (number only)' />
                                 <FormErrorMessage>Stock is required.</FormErrorMessage>
                             </FormControl>
-                        </Flex>
+                            <FormControl isRequired>
+                                <FormLabel>Product Type</FormLabel>
+                                <Select placeholder='Select product type'>
+                                    <option value={'MKN'}>Food</option>
+                                    <option value={'RKK'}>Cigarette</option>
+                                    <option value={'MNM'}>Beverage</option>
+                                </Select>
+                            </FormControl>
+                            <FormControl >
+                                <FormLabel>Description</FormLabel>
+                                <Textarea placeholder='Product description' />
+                            </FormControl>
+                        </Stack>
                     </ModalBody>
 
                     <ModalFooter>
