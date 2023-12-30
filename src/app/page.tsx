@@ -1,5 +1,5 @@
 'use client'
-import { Box, Container, Heading, Text } from "@chakra-ui/react"
+import { Box, Container, Flex, Heading, Spinner, Text } from "@chakra-ui/react"
 import List from "../../components/List"
 import Search from "../../components/Search"
 import { useEffect, useState } from "react"
@@ -38,10 +38,12 @@ export default function Home() {
         <Search />
       </Container>
       <Container maxW={'4xl'}>
-        {isLoading && products.length == 0 ? <Text textAlign={'center'}>Loading...</Text> :
-          <List data={products} field={["Product_Name", "Price", "Product_Description"]} tableHeader={["Product Name", "Price", "Description"]}></List>
-        }
-        {products.length == 0 && !isLoading ? <Text textAlign={'center'}>{apiResponse}</Text> : null}
+        <Flex justifyContent={'center'} minH={'20em'} alignItems={'center'}>
+          {isLoading && products.length == 0 ? <Spinner /> :
+            <List data={products} field={["Product_Name", "Price", "Product_Description"]} tableHeader={["Product Name", "Price", "Description"]}></List>
+          }
+          {products.length == 0 && !isLoading ? <Text textAlign={'center'}>{apiResponse}</Text> : null}
+        </Flex>
       </Container>
       <Box position={'fixed'} bottom={{ base: 7, md: 50 }} right={{ base: 7, md: 50 }}>
         <AddNewProduct />

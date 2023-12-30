@@ -36,12 +36,32 @@ export default function AddNewProduct() {
                     <ModalCloseButton />
 
                     <ModalBody>
-                        <NewProductForm />
+                        <Flex direction={'column'} gap={4}>
+                            <FormControl isRequired>
+                                <FormLabel>Product Name</FormLabel>
+                                <Input type='text' placeholder='New product name' />
+                                <FormErrorMessage>Product name is required.</FormErrorMessage>
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel>Price</FormLabel>
+                                <Input type='number' placeholder='The price (number only)' />
+                                <FormErrorMessage>Price is required.</FormErrorMessage>
+                            </FormControl>
+                            <FormControl >
+                                <FormLabel>Description</FormLabel>
+                                <Textarea placeholder='Product description' />
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel>Stock</FormLabel>
+                                <Input type='number' placeholder='Stock (number only)' />
+                                <FormErrorMessage>Stock is required.</FormErrorMessage>
+                            </FormControl>
+                        </Flex>
                     </ModalBody>
 
                     <ModalFooter>
                         <Button colorScheme='orange' variant={'outline'} mr={3} onClick={onClose}> Close </Button>
-                        <Button colorScheme='orange' variant={'solid'} onClick={handleSubmit} > Submit </Button>
+                        <Button colorScheme='orange' variant={'solid'} onClick={handleSubmit} type='submit'> Submit </Button>
                     </ModalFooter>
 
                 </ModalContent>

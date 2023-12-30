@@ -12,7 +12,7 @@ export default function List({ data, field, tableHeader }: { data: any[]; field:
 
     return (
         <>
-            <TableContainer>
+            <TableContainer w={'full'}>
                 <Table >
                     <Thead >
                         <Tr >
@@ -29,7 +29,7 @@ export default function List({ data, field, tableHeader }: { data: any[]; field:
                                 <Tr key={getRandomNumber()}>
                                     {field.map((key) => {
                                         return <Td key={getRandomNumber()}>{
-                                            key == field[0] ? <Text color={'blue'}> <Link href={`#/${data.id}`}> {data[key]} </Link> </Text> : data[key]
+                                            key == field[0] ? <Text color={'orange.500'}> <Link href={`#/${data.id}`}> {data[key]} </Link> </Text> : data[key]
                                         }
                                         </Td>
                                     })}
