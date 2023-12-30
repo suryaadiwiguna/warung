@@ -35,18 +35,11 @@ export default function ProductDetails({ productName, productId }: { productName
         axios.get('https://idrus-haerulumam.outsystemscloud.com/JagaWaroeng_API/rest/JagaWaroeng_API/Get_Product', { params: { Request_Id: productId } })
             .then((response: AxiosResponse) => {
                 setProductDetails({ ...response.data.Data })
-                // setProducts(response.data.data)
-                // setApiResponse(response.status)
                 setLoading(false)
-                console.log(response)
-                console.log(response.data.Data)
-                console.log(productDetails)
 
             })
             .catch((error: AxiosError) => {
                 setLoading(false)
-                // setApiResponse(`${error.message}  ${error.response?.status}`)
-                console.log(error)
             })
         // setOpen(true)
     }
@@ -96,13 +89,11 @@ function DeleteDialog({ productName, productId }: { productName: string; product
         setRequest(true)
         axios.delete('https://idrus-haerulumam.outsystemscloud.com/JagaWaroeng_API/rest/JagaWaroeng_API/Delete_Product', { params: { Id_Product: productId } })
             .then((response: AxiosResponse) => {
-                console.log(response)
                 setRequest(false)
                 alert(`Response: ${response.status}. ${productName} successfully deleted.`)
                 onClose()
             })
             .catch((error: AxiosError) => {
-                console.log(error)
                 alert(error)
                 setRequest(false)
             })
