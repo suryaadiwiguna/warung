@@ -32,7 +32,7 @@ export default function ProductDetails({ productName, productId }: { productName
 
     function openModal() {
         onOpen()
-        axios.get('https://idrus-haerulumam.outsystemscloud.com/JagaWaroeng_API/rest/JagaWaroeng_API/Get_Product', { params: { Request_Id: productId } })
+        axios.get(String(process.env.GET_PRODUCT), { params: { Request_Id: productId } })
             .then((response: AxiosResponse) => {
                 setProductDetails({ ...response.data.Data })
                 setLoading(false)
@@ -40,6 +40,8 @@ export default function ProductDetails({ productName, productId }: { productName
             })
             .catch((error: AxiosError) => {
                 setLoading(false)
+                console.log(error)
+                alert(error.message)
             })
         // setOpen(true)
     }

@@ -13,7 +13,7 @@ export default function Home() {
   const [apiResponse, setApiResponse] = useState<string | null | number>(null)
 
   useEffect(() => {
-    axios.get('https://idrus-haerulumam.outsystemscloud.com/JagaWaroeng_API/rest/JagaWaroeng_API/Get_All_Products')
+    axios.get(String(process.env.GET_PRODUCT_LIST))
       .then((response: AxiosResponse) => {
         setProducts(response.data.data)
         setApiResponse(response.status)
