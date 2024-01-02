@@ -23,6 +23,7 @@ import {
 } from '@chakra-ui/react'
 import { useRef, useState } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
+import EditProduct from './EditProduct';
 
 export default function ProductDetails({ productName, productId }: { productName: string; productId: number }) {
     const [productDetails, setProductDetails] = useState<any>({})
@@ -36,14 +37,12 @@ export default function ProductDetails({ productName, productId }: { productName
             .then((response: AxiosResponse) => {
                 setProductDetails({ ...response.data.Data })
                 setLoading(false)
-
             })
             .catch((error: AxiosError) => {
                 setLoading(false)
                 console.log(error)
                 alert(error.message)
             })
-        // setOpen(true)
     }
 
     return (
@@ -71,7 +70,7 @@ export default function ProductDetails({ productName, productId }: { productName
                     <ModalFooter>
                         <HStack>
                             {isLoading ? null : <DeleteDialog productName={productDetails.Product_Name} productId={productDetails.Id} />}
-                            <Button px={'2em'} colorScheme='orange' isLoading={isLoading}>Edit</Button>
+                            <EditProduct productData={productDetails} isLoading={isLoading} />
                             <Button px={'2em'} colorScheme='orange' onClick={onClose}>Close</Button>
                         </HStack>
                     </ModalFooter>
