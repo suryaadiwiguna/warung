@@ -12,7 +12,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true)
   const [apiResponse, setApiResponse] = useState<string | null | number>(null)
 
-  useEffect(() => {
+  function getAllProducts() {
     axios.get(String(process.env.GET_PRODUCT_LIST))
       .then((response: AxiosResponse) => {
         setProducts(response.data.data)
@@ -25,7 +25,16 @@ export default function Home() {
         setApiResponse(`${error.message}  ${error.response?.status}`)
         console.log(error)
       })
-  }, [])
+  }
+
+  useEffect(() => {
+    if (products.length == 0) {
+      getAllProducts()
+    }
+    else {
+      return
+    }
+  }, [products])
 
   return (
     <main>
@@ -35,11 +44,13 @@ export default function Home() {
         </Container>
       </Box>
       <Container maxW={'4xl'} mb={'1em'}>
-        <Search />
+        <Search searchHandler={setProducts} emptyHandler={getAllProducts} loadingHandler={setLoading} />
       </Container>
       <Container maxW={'4xl'}>
-        <Flex justifyContent={'center'} minH={'20em'} alignItems={'center'}>
-          {isLoading && products.length == 0 ? <Spinner /> :
+        <Flex justifyContent={'center'} alignItems={'center'} direction={'column'}>
+          {isLoading
+            ? <Spinner mt={'3em'} />
+            :
             <List data={products} field={["Product_Name", "Price", "Product_Description"]} tableHeader={["Product Name", "Price", "Description"]}></List>
           }
           {products.length == 0 && !isLoading ? <Text textAlign={'center'}>{apiResponse}</Text> : null}
