@@ -1,6 +1,6 @@
 'use client'
 
-import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import { Button, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { ChangeEvent, useEffect, useState, KeyboardEvent } from "react";
@@ -9,11 +9,16 @@ export default function Search({ searchHandler, emptyHandler, loadingHandler }: 
     //State management
     const [searchValue, setSearchValue] = useState<string>('')
     const [searchTouched, setSearchTouched] = useState(false)
+    const [hasSearched, setHasSearched] = useState(false)
+
     useEffect(() => {
-        if (searchValue == '' && searchTouched) {
+        console.log(searchValue, searchTouched, hasSearched)
+        console.log("Yo")
+        if (searchValue == '' && searchTouched && hasSearched) {
             loadingHandler(true)
             emptyHandler()
             setSearchTouched(false)
+            setHasSearched(false)
         }
     }, [searchValue])
 
@@ -22,8 +27,9 @@ export default function Search({ searchHandler, emptyHandler, loadingHandler }: 
         setSearchTouched(true)
         setSearchValue(event.target.value)
     }
-    function handleKeyDown(event: KeyboardEvent<HTMLElement>) {
+    function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
         if (event.key == "Enter") {
+            setHasSearched(true)
             searchProducts()
         }
     }
@@ -32,6 +38,7 @@ export default function Search({ searchHandler, emptyHandler, loadingHandler }: 
     function searchProducts() {
         // console.log(searchValue)
         loadingHandler(true)
+        setHasSearched(true)
         axios.get(process.env.SEARCH_PRODUCT + searchValue)
             .then((response: AxiosResponse) => {
                 console.log(response)
