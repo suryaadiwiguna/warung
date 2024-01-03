@@ -30,7 +30,7 @@ export default function Search({ searchHandler, emptyHandler, loadingHandler }: 
 
     //Main Search handler
     function searchProducts() {
-        console.log(searchValue)
+        // console.log(searchValue)
         loadingHandler(true)
         axios.get(process.env.SEARCH_PRODUCT + searchValue)
             .then((response: AxiosResponse) => {
