@@ -12,7 +12,6 @@ export default function Search({ searchHandler, emptyHandler, loadingHandler }: 
     const [hasSearched, setHasSearched] = useState(false)
 
     useEffect(() => {
-        console.log("Yo")
         if (searchValue == '' && searchTouched && hasSearched) {
             loadingHandler(true)
             emptyHandler()
