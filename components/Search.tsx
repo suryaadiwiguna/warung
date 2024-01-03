@@ -1,9 +1,9 @@
 'use client'
 
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
-import { Button, Input, InputGroup, InputLeftAddon, InputRightAddon } from "@chakra-ui/react";
+import { Button, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, KeyboardEvent } from "react";
 
 export default function Search({ searchHandler, emptyHandler, loadingHandler }: { searchHandler: Function, emptyHandler: Function, loadingHandler: Function }) {
     //State management
@@ -22,7 +22,7 @@ export default function Search({ searchHandler, emptyHandler, loadingHandler }: 
         setSearchTouched(true)
         setSearchValue(event.target.value)
     }
-    function handleKeyDown(event: KeyboardEvent) {
+    function handleKeyDown(event: KeyboardEvent<HTMLElement>) {
         if (event.key == "Enter") {
             searchProducts()
         }
