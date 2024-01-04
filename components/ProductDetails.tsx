@@ -24,6 +24,7 @@ import {
 import { useRef, useState } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import EditProduct from './EditProduct';
+import { useProductList } from './contexts/ProductListContext';
 
 export default function ProductDetails({ productName, productId }: { productName: string; productId: number }) {
     const [productDetails, setProductDetails] = useState<any>({})
@@ -70,7 +71,7 @@ export default function ProductDetails({ productName, productId }: { productName
                     <ModalFooter>
                         <HStack>
                             {isLoading ? null : <DeleteDialog productName={productDetails.Product_Name} productId={productDetails.Id} />}
-                            <EditProduct productData={productDetails} isLoading={isLoading} />
+                            <EditProduct productData={productDetails} isLoading={isLoading} successHandler={onClose} />
                             <Button px={'2em'} colorScheme='orange' onClick={onClose}>Close</Button>
                         </HStack>
                     </ModalFooter>
@@ -82,6 +83,7 @@ export default function ProductDetails({ productName, productId }: { productName
 
 function DeleteDialog({ productName, productId }: { productName: string; productId: number }) {
 
+    const { setReload } = useProductList()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isRequesting, setRequest] = useState(false)
     const cancelRef = useRef(null)
@@ -92,6 +94,7 @@ function DeleteDialog({ productName, productId }: { productName: string; product
             .then((response: AxiosResponse) => {
                 setRequest(false)
                 alert(`Response: ${response.status}. ${productName} successfully deleted.`)
+                setReload()
                 onClose()
             })
             .catch((error: AxiosError) => {

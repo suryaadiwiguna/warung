@@ -1,3 +1,4 @@
+'use client'
 import {
     Modal,
     ModalOverlay,
@@ -19,6 +20,8 @@ import {
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios, { AxiosError, AxiosResponse } from 'axios'
+import { useRouter } from 'next/navigation'
+import { useProductList } from './contexts/ProductListContext'
 
 type ProductData = {
     Id: number,
@@ -30,10 +33,10 @@ type ProductData = {
     Created_By: string
 }
 
-export default function EditProduct({ productData, isLoading }: { productData: ProductData, isLoading: boolean }) {
+export default function EditProduct({ productData, isLoading, successHandler }: { productData: ProductData, isLoading: boolean, successHandler: Function }) {
 
     const { Id, Product_Name, Price, Stock, Product_Type_Code, Product_Description } = productData;
-
+    const { setReload } = useProductList()
     //Modal handler (Chakra UI)
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -70,7 +73,9 @@ export default function EditProduct({ productData, isLoading }: { productData: P
                     alert(res.data.msg)
                     console.log(res)
                     setSubmitting(false)
+                    setReload()
                     onClose()
+                    successHandler()
                 })
                 .catch((error: AxiosError) => {
                     alert(error)
@@ -92,7 +97,7 @@ export default function EditProduct({ productData, isLoading }: { productData: P
 
     return (
         <>
-            <Button colorScheme="orange" onClick={openModal} isLoading={isLoading} >Edit </Button>
+            <Button colorScheme="orange" onClick={openModal} isDisabled={isLoading} >Edit </Button>
 
             <Modal isOpen={isOpen} onClose={onClose} size={'4xl'}>
                 <ModalOverlay />

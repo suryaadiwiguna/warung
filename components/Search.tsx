@@ -3,18 +3,20 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Button, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ChangeEvent, useEffect, useState, KeyboardEvent } from "react";
+import { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
+import { useProductList } from "./contexts/ProductListContext";
 
-export default function Search({ searchHandler, emptyHandler, loadingHandler }: { searchHandler: Function, emptyHandler: Function, loadingHandler: Function }) {
+export default function Search() {
     //State management
     const [searchValue, setSearchValue] = useState<string>('')
     const [searchTouched, setSearchTouched] = useState(false)
     const [hasSearched, setHasSearched] = useState(false)
+    const productList = useProductList()
 
     useEffect(() => {
         if (searchValue == '' && searchTouched && hasSearched) {
-            loadingHandler(true)
-            emptyHandler()
+            productList.setLoading(true)
+            productList.getAllProducts()
             setSearchTouched(false)
             setHasSearched(false)
         }
@@ -32,16 +34,16 @@ export default function Search({ searchHandler, emptyHandler, loadingHandler }: 
         }
     }
 
-    //Main Search handler
+    //Search handler
     function searchProducts() {
         // console.log(searchValue)
-        loadingHandler(true)
+        productList.setLoading(true)
         setHasSearched(true)
         axios.get(process.env.SEARCH_PRODUCT + searchValue)
             .then((response: AxiosResponse) => {
                 console.log(response)
-                searchHandler(response.data)
-                loadingHandler(false)
+                productList.setProducts(response.data)
+                productList.setLoading(false)
             })
             .catch((error: AxiosError) => {
                 alert(error)

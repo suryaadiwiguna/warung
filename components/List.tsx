@@ -1,11 +1,11 @@
-'use client'
-
-import { Table, Tbody, Th, Thead, Tr, Td, Text, TableContainer } from "@chakra-ui/react";
-import Link from "next/link";
+import { Table, Tbody, Th, Thead, Tr, Td, TableContainer, Spinner, Center } from "@chakra-ui/react";
 import { ReactElement } from "react";
 import ProductDetails from "./ProductDetails";
+import { useProductList } from "./contexts/ProductListContext";
 
-export default function List({ data, field, tableHeader }: { data: any[]; field: string[]; tableHeader: string[] }): ReactElement {
+export default function List({ field, tableHeader }: { field: string[]; tableHeader: string[] }): ReactElement {
+    const productList = useProductList()
+    const { products, isLoading, apiResponse }: { products: any[], isLoading: boolean, apiResponse: string | number } = productList
 
     function getRandomNumber() {
         return Math.round(Math.random() * (99999 - 10001))
@@ -13,35 +13,42 @@ export default function List({ data, field, tableHeader }: { data: any[]; field:
 
     return (
         <>
-            <TableContainer w={'full'}>
-                <Table >
-                    <Thead >
-                        <Tr >
-                            {tableHeader.map((key) => {
+            {isLoading
+                ? <Center><Spinner /></Center>
+                : <TableContainer w={'full'}>
+                    <Table >
+                        <Thead >
+                            <Tr >
+                                {tableHeader.map((key) => {
+                                    return (
+                                        <Th key={getRandomNumber()}>{key}</Th>
+                                    )
+                                })}
+                            </Tr>
+                        </Thead>
+                        <Tbody >
+                            {products.map((products) => {
                                 return (
-                                    <Th key={getRandomNumber()}>{key}</Th>
+                                    <Tr key={getRandomNumber()}>
+                                        {field.map((key) => {
+                                            return <Td key={getRandomNumber()}>{
+                                                key == field[0]
+                                                    ? <ProductDetails
+                                                        productName={products[key]}
+                                                        productId={products.Id}
+                                                    />
+                                                    : products[key]
+                                            }
+                                            </Td>
+                                        })}
+                                    </Tr>
                                 )
                             })}
-                        </Tr>
-                    </Thead>
-                    <Tbody >
-                        {data.map((data) => {
-                            return (
-                                <Tr key={getRandomNumber()}>
-                                    {field.map((key) => {
-                                        return <Td key={getRandomNumber()}>{
-                                            key == field[0] ? <ProductDetails productName={data[key]} productId={data.Id} /> : data[key]
-                                            // < Text color={'orange.500'}> <Link href={`#/${data.id}`}> {data[key]} </Link> </Text>
-                                        }
-                                        </Td>
-                                    })}
-                                </Tr>
-                            )
-                        })}
 
-                    </Tbody>
-                </Table>
-            </TableContainer>
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            }
         </>
     )
 }

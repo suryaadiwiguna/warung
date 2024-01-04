@@ -1,40 +1,12 @@
 'use client'
-import { Box, Container, Flex, Heading, Spinner, Text } from "@chakra-ui/react"
+
+import { Box, Container, Heading } from "@chakra-ui/react"
 import List from "../../components/List"
 import Search from "../../components/Search"
-import { useEffect, useState } from "react"
-import axios, { AxiosError, AxiosResponse } from "axios"
 import AddNewProduct from "../../components/AddNewProduct"
+import { ProductListProvider } from "../../components/contexts/ProductListContext"
 
 export default function Home() {
-
-  const [products, setProducts] = useState([])
-  const [isLoading, setLoading] = useState(true)
-  const [apiResponse, setApiResponse] = useState<string | null | number>(null)
-
-  function getAllProducts() {
-    axios.get(String(process.env.GET_PRODUCT_LIST))
-      .then((response: AxiosResponse) => {
-        setProducts(response.data.data)
-        setApiResponse(response.status)
-        setLoading(false)
-
-      })
-      .catch((error: AxiosError) => {
-        setLoading(false)
-        setApiResponse(`${error.message}  ${error.response?.status}`)
-        console.log(error)
-      })
-  }
-
-  useEffect(() => {
-    if (products.length == 0) {
-      getAllProducts()
-    }
-    else {
-      return
-    }
-  }, [products])
 
   return (
     <main>
@@ -43,22 +15,20 @@ export default function Home() {
           <Heading size={'md'} textAlign={'center'}>Jaga Warung Yow</Heading>
         </Container>
       </Box>
-      <Container maxW={'4xl'} mb={'1em'}>
-        <Search searchHandler={setProducts} emptyHandler={getAllProducts} loadingHandler={setLoading} />
-      </Container>
-      <Container maxW={'4xl'}>
-        <Flex justifyContent={'center'} alignItems={'center'} direction={'column'}>
-          {isLoading
-            ? <Spinner mt={'3em'} />
-            :
-            <List data={products} field={["Product_Name", "Price", "Product_Description"]} tableHeader={["Product Name", "Price", "Description"]}></List>
-          }
-          {products.length == 0 && !isLoading ? <Text textAlign={'center'}>{apiResponse}</Text> : null}
-        </Flex>
-      </Container>
-      <Box position={'fixed'} bottom={{ base: 7, md: 50 }} right={{ base: 7, md: 50 }}>
-        <AddNewProduct />
-      </Box>
+      <ProductListProvider>
+        <Container maxW={'4xl'} mb={'1em'}>
+          <Search />
+        </Container>
+        <Container maxW={'4xl'}>
+          <List
+            field={["Product_Name", "Price", "Product_Description"]}
+            tableHeader={["Product Name", "Price", "Description"]}>
+          </List>
+        </Container>
+        <Box position={'fixed'} bottom={{ base: 7, md: 50 }} right={{ base: 7, md: 50 }}>
+          <AddNewProduct />
+        </Box>
+      </ProductListProvider>
     </main>
   )
 }

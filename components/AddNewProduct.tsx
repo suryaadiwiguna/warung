@@ -22,9 +22,11 @@ import { AddIcon } from '@chakra-ui/icons'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios, { AxiosError, AxiosResponse } from 'axios'
+import { useProductList } from './contexts/ProductListContext'
 
 export default function AddNewProduct() {
-
+    //State manager
+    const { setReload } = useProductList()
     //Modal handler (Chakra UI)
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -52,7 +54,7 @@ export default function AddNewProduct() {
                 .required("Product type is required"),
             Product_Description: Yup.string()
         }),
-        onSubmit: (values, { setSubmitting }) => {
+        onSubmit: (values, { setSubmitting, resetForm }) => {
             console.log(values)
             axios.post('https://idrus-haerulumam.outsystemscloud.com/JagaWaroeng_API/rest/JagaWaroeng_API/Insert_Product', values)
                 .then((res: AxiosResponse) => {
@@ -60,6 +62,8 @@ export default function AddNewProduct() {
                     console.log(res)
                     setSubmitting(false)
                     onClose()
+                    setReload()
+                    resetForm()
                 })
                 .catch((error: AxiosError) => {
                     alert(error)
