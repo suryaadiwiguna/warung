@@ -58,15 +58,16 @@ export default function AddNewProduct() {
             console.log(values)
             axios.post('https://idrus-haerulumam.outsystemscloud.com/JagaWaroeng_API/rest/JagaWaroeng_API/Insert_Product', values)
                 .then((res: AxiosResponse) => {
-                    alert(res.data.msg)
                     console.log(res)
                     setSubmitting(false)
                     onClose()
                     setReload()
                     resetForm()
+                    alert(res.data.msg)
                 })
                 .catch((error: AxiosError) => {
                     alert(error)
+                    setSubmitting(false)
                 })
         }
     })
@@ -101,7 +102,7 @@ export default function AddNewProduct() {
                                     <Input
                                         id='Price'
                                         name='Price'
-                                        type='text'
+                                        type='number'
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.Price}
@@ -131,6 +132,7 @@ export default function AddNewProduct() {
                                     <Input
                                         id='Stock'
                                         name='Stock'
+                                        type='number'
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.Stock}

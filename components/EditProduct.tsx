@@ -125,7 +125,7 @@ export default function EditProduct({ productData, isLoading, successHandler }: 
                                     <Input
                                         id='Price'
                                         name='Price'
-                                        type='text'
+                                        type='number'
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.Price}
@@ -155,6 +155,7 @@ export default function EditProduct({ productData, isLoading, successHandler }: 
                                     <Input
                                         id='Stock'
                                         name='Stock'
+                                        type='number'
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         value={formik.values.Stock}
