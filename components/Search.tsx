@@ -28,7 +28,7 @@ export default function Search() {
     }
 
     function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-        if (event.key == "Enter") {
+        if (event.key == "Enter" && searchValue) {
             setHasSearched(true)
             searchProducts()
         }
@@ -63,7 +63,7 @@ export default function Search() {
                     ml={'1em'}
                     px={'2em'}
                     onClick={searchProducts}
-                    isDisabled={!Boolean(searchValue)}
+                    isDisabled={!searchValue}
                 >
                     Search
                 </Button>
