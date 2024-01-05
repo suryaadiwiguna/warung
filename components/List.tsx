@@ -1,3 +1,5 @@
+'use client'
+
 import { Table, Tbody, Th, Thead, Tr, Td, TableContainer, Spinner, Center } from "@chakra-ui/react";
 import { ReactElement } from "react";
 import ProductDetails from "./ProductDetails";
@@ -5,7 +7,7 @@ import { useProductList } from "./contexts/ProductListContext";
 
 export default function List({ field, tableHeader }: { field: string[]; tableHeader: string[] }): ReactElement {
     const productList = useProductList()
-    const { products, isLoading, apiResponse }: { products: any[], isLoading: boolean, apiResponse: string | number } = productList
+    const { products, isLoading }: { products: any[], isLoading: boolean } = productList
 
     function getRandomNumber() {
         return Math.round(Math.random() * (99999 - 10001))

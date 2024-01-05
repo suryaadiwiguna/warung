@@ -1,5 +1,3 @@
-'use client'
-
 import { Box, Container, Heading } from "@chakra-ui/react"
 import List from "../../components/List"
 import Search from "../../components/Search"

@@ -20,7 +20,6 @@ import {
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { useRouter } from 'next/navigation'
 import { useProductList } from './contexts/ProductListContext'
 
 type ProductData = {
