@@ -35,7 +35,6 @@ export function ProductListProvider({ children }: { children: ReactNode }) {
 
     function reloadHandler() {
         setReload(reloadComponent + 1)
-        // console.log(reloadComponent)
     }
 
     function getAllProducts() {
@@ -49,7 +48,6 @@ export function ProductListProvider({ children }: { children: ReactNode }) {
             .catch((error: AxiosError) => {
                 setLoading(false)
                 setApiResponse(`${error.message}  ${error.response?.status}`)
-                console.log(error)
             })
     }
 

@@ -55,10 +55,8 @@ export default function AddNewProduct() {
             Product_Description: Yup.string()
         }),
         onSubmit: (values, { setSubmitting, resetForm }) => {
-            console.log(values)
             axios.post('https://idrus-haerulumam.outsystemscloud.com/JagaWaroeng_API/rest/JagaWaroeng_API/Insert_Product', values)
                 .then((res: AxiosResponse) => {
-                    console.log(res)
                     setSubmitting(false)
                     onClose()
                     setReload()

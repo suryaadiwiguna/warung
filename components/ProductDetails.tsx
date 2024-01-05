@@ -42,7 +42,6 @@ export default function ProductDetails({ productName, productId }: { productName
             })
             .catch((error: AxiosError) => {
                 setLoading(false)
-                console.log(error)
                 alert(error.message)
             })
     }

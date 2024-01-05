@@ -36,12 +36,10 @@ export default function Search() {
 
     //Search handler
     function searchProducts() {
-        // console.log(searchValue)
         productList.setLoading(true)
         setHasSearched(true)
         axios.get(process.env.SEARCH_PRODUCT + searchValue)
             .then((response: AxiosResponse) => {
-                console.log(response)
                 productList.setProducts(response.data)
                 productList.setLoading(false)
             })

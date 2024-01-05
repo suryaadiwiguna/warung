@@ -65,12 +65,10 @@ export default function EditProduct({ productData, isLoading, successHandler }: 
             Product_Description: Yup.string()
         }),
         onSubmit: (values, { setSubmitting }) => {
-            console.log(values)
             // setSubmitting(false)
             axios.put(String(process.env.UPDATE_PRODUCT), values)
                 .then((res: AxiosResponse) => {
                     alert(res.data.msg)
-                    console.log(res)
                     setSubmitting(false)
                     setReload()
                     onClose()
