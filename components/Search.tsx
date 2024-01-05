@@ -35,7 +35,7 @@ export default function Search() {
     }
 
     function searchProducts() {
-        window.focus()
+        if (document.activeElement) (document.activeElement as HTMLElement).blur()
         productList.setLoading(true)
         setHasSearched(true)
         axios.get(process.env.SEARCH_PRODUCT + searchValue)
