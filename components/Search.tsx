@@ -15,8 +15,7 @@ export default function Search() {
 
     useEffect(() => {
         if (searchValue == '' && searchTouched && hasSearched) {
-            productList.setLoading(true)
-            productList.getAllProducts()
+            productList.setProducts(productList.initialProductList)
             setSearchTouched(false)
             setHasSearched(false)
         }
@@ -27,6 +26,7 @@ export default function Search() {
         setSearchTouched(true)
         setSearchValue(event.target.value)
     }
+
     function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
         if (event.key == "Enter") {
             setHasSearched(true)
@@ -34,7 +34,6 @@ export default function Search() {
         }
     }
 
-    //Search handler
     function searchProducts() {
         productList.setLoading(true)
         setHasSearched(true)

@@ -20,6 +20,7 @@ export function ProductListProvider({ children }: { children: ReactNode }) {
     const [isLoading, setLoading] = useState(true)
     const [apiResponse, setApiResponse] = useState<string | null | number>(null)
     const [reloadComponent, setReload] = useState(1)
+    const [initialProductList, setInitialProductList] = useState([])
 
     const productListState = {
         products: products,
@@ -30,7 +31,8 @@ export function ProductListProvider({ children }: { children: ReactNode }) {
         setApiResponse: setApiResponse,
         fetch: fetch,
         setReload: reloadHandler,
-        getAllProducts: getAllProducts
+        getAllProducts: getAllProducts,
+        initialProductList: initialProductList
     }
 
     function reloadHandler() {
@@ -43,7 +45,7 @@ export function ProductListProvider({ children }: { children: ReactNode }) {
                 setProducts(response.data.data)
                 setApiResponse(response.status)
                 setLoading(false)
-
+                setInitialProductList(response.data.data)
             })
             .catch((error: AxiosError) => {
                 setLoading(false)
