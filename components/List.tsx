@@ -17,39 +17,41 @@ export default function List({ field, tableHeader }: { field: string[]; tableHea
         <>
             {isLoading
                 ? <Center><Spinner /></Center>
-                : <TableContainer w={'full'}>
-                    <Table >
-                        <Thead >
-                            <Tr >
-                                {tableHeader.map((key) => {
+                : !products.length
+                    ? <Center>No products is found</Center>
+                    : <TableContainer w={'full'}>
+                        <Table >
+                            <Thead >
+                                <Tr >
+                                    {tableHeader.map((key) => {
+                                        return (
+                                            <Th key={getRandomNumber()}>{key}</Th>
+                                        )
+                                    })}
+                                </Tr>
+                            </Thead>
+                            <Tbody >
+                                {products.map((products) => {
                                     return (
-                                        <Th key={getRandomNumber()}>{key}</Th>
+                                        <Tr key={getRandomNumber()}>
+                                            {field.map((key) => {
+                                                return <Td key={getRandomNumber()}>{
+                                                    key == field[0]
+                                                        ? <ProductDetails
+                                                            productName={products[key]}
+                                                            productId={products.Id}
+                                                        />
+                                                        : products[key]
+                                                }
+                                                </Td>
+                                            })}
+                                        </Tr>
                                     )
                                 })}
-                            </Tr>
-                        </Thead>
-                        <Tbody >
-                            {products.map((products) => {
-                                return (
-                                    <Tr key={getRandomNumber()}>
-                                        {field.map((key) => {
-                                            return <Td key={getRandomNumber()}>{
-                                                key == field[0]
-                                                    ? <ProductDetails
-                                                        productName={products[key]}
-                                                        productId={products.Id}
-                                                    />
-                                                    : products[key]
-                                            }
-                                            </Td>
-                                        })}
-                                    </Tr>
-                                )
-                            })}
 
-                        </Tbody>
-                    </Table>
-                </TableContainer>
+                            </Tbody>
+                        </Table>
+                    </TableContainer>
             }
         </>
     )
